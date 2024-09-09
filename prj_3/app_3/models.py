@@ -1,8 +1,12 @@
 from django.db import models
-from django.contrib.auth.models import User, AbstractUser
+from django.contrib.auth.models import AbstractUser
 
 from ckeditor_uploader.fields import RichTextUploadingField
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse
+
+
+class User(AbstractUser):
+    code = models.CharField(max_length=15, blank=True, null=True)
 
 
 class Post(models.Model):
@@ -33,7 +37,3 @@ class Response(models.Model):
     text = models.TextField()
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     status = models.BooleanField(default=False)
-
-
-class User(AbstractUser):
-    code = models.CharField(max_length=15, blank=True, null=True)

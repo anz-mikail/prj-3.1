@@ -40,6 +40,19 @@ INSTALLED_APPS = [
 
     'django.contrib.sites',
     'django.contrib.flatpages',
+    
+    'django_filters',
+    'django_apscheduler',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.yandex',
+
+    'ckeditor',
+    'ckeditor_uploader',
+
+    'app_3',
 ]
 
 SITE_ID = 1
@@ -54,6 +67,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'prj_3.urls'
@@ -129,6 +144,55 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STATICFILES_DIRS = [BASE_DIR / "static"]
-
 AUTH_USER_MODEL = 'app_3.User'
+
+STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = os.path.join(BASE_DIR, "app_01/static")
+
+MEDIA_URL = '/images/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "static/images")
+
+
+CKEDITOR_BASEPATH = '/static/ckeditor/ckeditor/'
+CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'removePlugins': 'exportpdf',
+        'extraPlugins': ','.join(['html5video'])
+    },
+}
+
+
+LOGIN_REDIRECT_URL = '/post/'
+LOGOUT_REDIRECT_URL = '/post/'
+
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+#ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_FORMS = {"signup": "accounts.forms.CustomSignupForm"}
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = "test.skillfactory@yandex.ru"
+EMAIL_HOST_PASSWORD = "vsjrqyvktdttnlgx"
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+
+DEFAULT_FROM_EMAIL = "test.skillfactory@yandex.ru"
+
+SERVER_EMAIL = "test.skillfactory@yandex.ru"
+
+
